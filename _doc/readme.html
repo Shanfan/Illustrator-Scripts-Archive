@@ -1,0 +1,374 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<HEAD>
+<TITLE>s.h's page - JavaScript Scripts for Adobe Illustrator 10 - CS5</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF8">
+<META HTTP-EQUIV="Content-Script-Type" CONTENT="text/javascript">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+<style type="text/css">
+body { font-size: 90%;
+    font-family: Palatino,"Palatino Linotype","Times New Roman",serif; }
+h2 { font-size: 160%; }
+h3 { font-size: 130%; 
+	padding: 4px 14px;
+	background-color: #eeeeee; }
+p { margin:0.5em 2em; }
+img{ margin-bottom: 1em; }
+.red{ font-weight:bold;
+	color:red;
+}
+</style>
+</HEAD>
+<BODY bgcolor="#ffffff" link="#006699" alink="#ff9900" vlink="#660099" text="#333333">
+<blockquote>
+<br>
+<a href="http://park12.wakwak.com/~shp/">Home</a> (Japanese Page)
+<hr>
+<h2>JavaScript Scripts for Adobe Illustrator 10 - CS5</h2>
+<hr>
+<p>This archive includes following sample scripts (not well commented yet confused)<br>
+tested with Adobe Illustrator CS5, Windows XP SP3 (Japanese version).<br>
+Free to use and distribute.</p>
+<UL>
+	<LI><A href="#usage1"><b># General Note For Usage</b></A></LI>
+	<LI><A href="#dash_offset">Adjust Dashes (offset)</A></LI>
+	<LI><A href="#dash">Adjust Dashes</A></LI>
+	<LI><A href="#arc_correction">Arc Correction</A></LI>
+	<LI><A href="#archimedes">Archimedean Spiral</A></LI>
+	<LI><A href="#arrow">Arrow-A, Arrow-V</A></LI>
+	<LI><A href="#circle">Circle</A></LI>
+	<LI><A href="#circumcircle">Circumcircle</A></LI>
+	<LI><A href="#common">Common Tangents</A></LI>
+	<LI><A href="#cut_at">Cut At Selected Anchors</A></LI>
+	<LI><A href="#dance">Dance</A></LI>
+	<LI><A href="#divide">Divide (length)</A></LI>
+	<LI><A href="#dup_at">Dup At Selected Anchors</A></LI>
+	<LI><A href="#Exetnd">Extend Handles</A></LI>
+	<LI><A href="#join_reasonably">Join Reasonably</A></LI>
+	<LI><A href="#merge">Merge Overlapped Anchors</A></LI>
+	<LI><A href="#metaball">Metaball (Arc), Metaball</A></LI>
+	<LI><A href="#path_length">Path Length</A></LI>
+	<LI><A href="#remove_anchors">Remove Anchors</A></LI>
+	<LI><A href="#reverse">Reverse</A></LI>
+	<LI><A href="#roundany">Round Any Corner</A></LI>
+	<LI><A href="#sine">Sine Curve</A></LI>
+	<LI><A href="#fromapoint">Tangents From A Point</A></LI>
+	<LI><A href="#treelike">Tree-like</A></LI>
+</UL>
+
+<p>The archive "<b>jsx_lf.zip</b>" includes the same scripts as "...js" but ".jsx" extension and unix newline (LF).
+Maybe suitable for Mac.<br>
+<br>
+</p>
+
+<hr><p>Author : Hiroyuki Sato -
+<a href="mailto:pub.hiro.s@to.email.ne.jp">pub.hiro.s@to.email.ne.jp</a>
+</p>
+
+<hr>
+<h3><A name="usage1"># General Note For Usage</A></h3>
+<p><big><b>&bull; How to Use the Scripts</b></big><br>
+Choose <b>File&gt;Scripts&gt;Browse</b>, and open the script to run.<br>
+Or place the script in the directory "<b>Adobe Illustrator CS5\Presets\<i>&lt;your locale&gt;</i>\Scripts</b>", then restart Illustrator.<br>
+Download the PDF documents for more information.
+<a href="http://www.google.com/search?q=site:www.adobe.com+illustrator+CS5+javascript">http://www.google.com/search?q=site:www.adobe.com+illustrator+CS5+javascript</a><br>
+"Adobe Illustrator CS5 Scripting Guide"<br>
+"Adobe Illustrator CS5 Reference: JavaScript"<br>&nbsp;
+</p>
+<p><big><b>&bull; Selection of part of a path</b></big><br>
+Some scripts work only for selected <b>anchor points</b> or <b>sides</b>
+(= <b>lines</b>, <b>bezier curve segments</b>).
+A side (= a line, a bezier curve segment) means one of each line segment
+drawn to connect a couple of anchor points.
+In other words, selected parts means targets for Cut or Copy command.
+Regular (or Group) Select Tool selects whole of a path. - [<a href="img/aics_script_ways2select.gif" target="_blank">fig.</a>]<br>&nbsp;
+</p>
+<p><big><b>&bull; A Compound Path Issue</b></big><br>
+Some scripts don't work for some part of compound pathes.
+When this occurs, please select part of the compound path or release the compound path and
+select them, then run script again.
+I still have not figured out how to get properties from grouped pathes inside a compound path.<br>&nbsp;
+</p>
+
+<hr>
+<h3><A name="dash_offset">Adjust Dashes (offset)</A></h3>
+<p>
+<img src="img/aics_script_adjust_dashes_offset_en.gif" width="469" height="317" alt="" border=1><br>
+<b>fig.1</b> : This script adjusts dashed lines in the selection in order to the center of the first dash comes at each anchor points.<br>
+    For its purpose, when adjacent segments of an anchor of the target path have a difference in length -- a rectangle like above, for example --, this script splits the path at this anchor, applies a suitable dash setting for each splitted path, then put them into a group.  This is a lockstep trick caused by an Illustrator path can have only one simple rule for dashes and gaps.  This process also CLEARS FILL COLORS, if it needs, and if the pash has BUTT end cap, change it to PROJECTION end cap.</p>
+
+<p><b>fig.2</b> : The left figure is splitted with pathfinder ( outline ), in order to make anchors at all intersection points.</p>
+
+<hr>
+<h3><A name="dash">Adjust Dashes</A></h3>
+<p>
+<img src="img/aics_script_hasen_en.gif" width="400" height="194" alt="" border=1><br>
+adjusts the lengths of dashes and gaps of dashed lines<br>
+in order to the length of the path is divisible by<br>
+total length of dashes and gaps
+</p>
+
+<hr>
+<h3><A name="arc_correction">Arc Correction</A></h3>
+<p>
+<img src="img/aics_script_arc_correction.gif" width="580" height="130" alt="" border=1><br>
+corrects free-hand drawn arc-like pathes in the selection.
+To use, just select the pathes and run this script.<br>
+For the (not need-to-know) detail of the method, please read the comments inside of the script with above figure.
+</p>
+
+<hr>
+<h3><A name="archimedes">Archimedean Spiral</A></h3>
+<p>
+<img src="img/aics_script_archimedes.gif" width="438" height="214" alt="" border=1><br>
+draws an (approximate) Archimedean spiral. 
+</p>
+
+<hr>
+<h3><A name="arrow">Arrow-A, Arrow-V</A></h3>
+<p>
+<img src="img/aics_script_arrow.gif" width="459" height="128" alt="" border=1><br>
+draws arrow for each selected end (anchor) of the selected pathes.</p>
+<p>"A" and "V" mean the shape of the head of the arrow.</p>
+<p>The visible peaks of arrows exactly locate at each visible end of the selected pathes.</p>
+<p>The end of pathes are trimmed in order to avoid sticking out from the head of the arrow.</p>
+<p>The path with projection end cap is modified to but end cap.</p>
+
+<hr>
+<h3><A name="circle">Circle</A></h3>
+<p>
+<img src="img/aics_script_circle_en.gif" width="323" height="162" alt="" border=1><br>
+draws a circle with specified number of anchor points.
+</p>
+
+<hr>
+<h3><A name="circumcircle">Circumcircle</A></h3>
+<p>
+<img src="img/aics_script_circumcircle.gif" width="508" height="136" alt="" border=1><br>
+draws circumcircles for each selcted path
+</p>
+<p>
+Method:<br>
+The major reason why I wrote this script is to draw a "circumcircle" for a star.<br>
+So the method to find the center and the radius for the circumcircle is rather incertitude.</p>
+<ol>
+<li>find out a perpendicular bisector for the line connecting
+   1st and 2nd anchor</li>
+<li>do the same for 1st and 3rd anchor
+   (if the path is a triangle, 2nd and 3rd anchor)</li>
+<li>find out intersection point of 1 and 2.
+   for the center of the circumcircle to draw</li>
+<li>find out the length of the line connecting the center and 1st
+   anchor, then do the same for the center and 2nd anchor.
+   define longer one as the radius of the circumcircle to draw.</li>
+</ol>
+<p>The rightmost one in the figure above is a case of failure.</p>
+
+
+<hr>
+<h3><A name="common">Common Tangents</A></h3>
+<p>
+<img src="img/aics_script_kyotsu_en.gif" width="300" height="200" alt="" border=1><br>
+draws common tangents to the selected curved lines, if they are detected.<br>
+</p>
+
+<hr>
+<h3><A name="cut_at">Cut At Selected Anchors</A></h3>
+<p>cuts selected pathes at each selected anchor</p>
+
+<hr>
+<h3><A name="dance">Dance</A></h3>
+<p>
+<img src="img/aics_script_dance_en.gif" width="477" height="277" alt="" border=1><br>
+ adds a new layer and draws dancing people on it<br>
+<br>
+ ### notice<br>
+ The dancers are made with various width of lines.<br>
+ So please be careful about the setting of Scale Tool<br>
+ when you want to scale them.
+</p>
+
+<hr>
+<h3><A name="divide">Divide (length)</A></h3>
+<p><img src="img/aics_script_divide_length.gif" width="314" height="225" alt="" border=1><br>
+divides each selected segment into specified number. based on the length.<br>
+Length of each segment in each divided segments is equal.
+</p>
+
+<hr>
+<h3><A name="dup_at">Dup At Selected Anchors</A></h3>
+<p><img src="img/aics_script_dup_at.gif" width="579" height="115" alt="" border=1><br>
+duplicates the foreground object in the selection
+at the locations of the rest of each selected anchor points.
+</p>
+
+<hr>
+<h3><A name="Extend">Extend Handles</A></h3>
+<p>
+<img src="img/aics_script_nobasu.gif" width="367" height="313" alt=""border=1><br>
+extends all handles of selected anchor points with specified rate.<br>
+100 : original size<br>
+120 : extend 20%<br>
+ 80 : shorten 20%<br>
+  0 : remove handles<br>
+-100 : reverse handles<br>
+</p>
+
+<hr>
+<h3><A name="join_reasonably">Join Reasonably</A></h3>
+<p>joins the open pathes in the selection together with reasonable order
+</p>
+
+<hr>
+<h3><A name="merge">Merge Overlapped Anchors</A></h3>
+<p>
+merges nearly overlapped anchor points.<br>
+also reports how many anchor points had been reduced.<br>
+<br>
+USAGE: Select the path(es) and run this script.
+</p>
+
+<hr>
+<h3><A name="metaball">Metaball (Arc), Metaball</A></h3>
+<p>
+<img src="img/aics_script_metaball.gif" width="459" height="214" alt="" border=1><br>
+This script may help to create Metaball-like shapes<br>
+"Metaball (Arc)" uses arcs to connect. "Metaball" uses suitable bezier curves.<br>
+<br>
+USAGE : Draw some circles and select them, then run this script.<br>
+When a prompt appears, type in an optional value for the the connecting curves, then click OK.<br>
+// (it doesn't check in the script whether each path is really a circle)<br>
+<br>
+# Combining the shapes using Pathfinder may results several overlapping<br>
+  anchor points on the path.  if it occurs, it may help to solve it to<br>
+  use my another script "Merge Overlapped Anchors.js".<br>
+  This is a simple sample script that merges overlapping anchors on the path.<br>
+</p>
+
+<hr>
+<h3><A name="path_length">Path Length</A></h3>
+<p>
+<img src="img/aics_script_length.gif" width="304" height="104" alt="" border=1><br>
+finds out length of the each selected path, and total length of the selected pathes.<br>
+Then write out them on the artboard as text object
+</p>
+<p>This script uses JavaScript's "length" property of PathItem.
+if it is available (= CS3 or later).
+ You can force calculate the length by "use_native_property"
+setting set to false. ( see inside the script )</p>
+<p>NOTE:<br>The return values of "PathItem.length" property and the function in this script
+are slightly different especially in complex pathes.
+It seems that the difference is 0.05 millimeter at most.</p>
+
+<hr>
+<h3><A name="remove_anchors">Remove Anchors</A></h3>
+<p><img src="img/aics_script_remove_anchors.gif" width="319" height="146" alt="" border=1><br>
+removes selected anchor points
+</p>
+
+<hr>
+<h3><A name="reverse">Reverse</A></h3>
+<p>
+reverses the order of the anchor points of each selected pathes<br>
+</p>
+<p>2009-05-23: comment-out showing alert part</p>
+<hr>
+<h3><A name="roundany">Round Any Corner</A></h3>
+<p>
+<img src="img/aics_script_roundany.gif" width="460" height="325" alt="" border=1><br>
+ rounds selected corners of PathItems.<br>
+ Especially for the corners at the intersection point of curves,<br>
+ this script may work better than "Round Corners" filter (but slower).<br>
+<br>
+ ## How To Use<br>
+<br>
+ ## Illustrator CS<br>
+  1. Select the anchor(s) or whole path(es) to round.<br>
+  2. Run this script. A prompt box appears to set the rounding radius.<br>
+ &nbsp; &nbsp; Input the radius in point, then click OK.<br>
+  #. You can choose a behavior like Illustrator10 by change the setting.<br>
+ &nbsp; &nbsp; (-- see "setting" section inside the script)<br>
+<br>
+ ## Illustrator 10<br>
+  1. Select the anchor(s) or whole path(es) to round<br>
+ &nbsp; &nbsp; WITH a foreground path that specifies the rounding radius.<br>
+ &nbsp; &nbsp; Half width of foreground path is used for the radius. (excluding stroke width)<br>
+ &nbsp; &nbsp; Using a circle is most suitable for intuitive understanding and ease of use.<br>
+ &nbsp; &nbsp; The script asks you to continue if there's a difference greater than 1 pt<br>
+ &nbsp; &nbsp; between width and height of foreground path.<br>
+  2. Run this script.  The foreground path is removed after rounding.<br>
+  #. When the number of selected path is 1, predefined radius is used<br>
+ &nbsp; &nbsp; for rounding. (-- see "setting" section inside the script)<br><br>
+<img src="img/rac2.gif" width="517" height="254" alt="" border=1><br>
+<br>
+ ## Rounding Method<br>
+ Basically, the rounding method is compatible with the "Round Corners" filter.<br>
+ It is to add two anchors instead of the original anchor, at the points of<br>
+ specified line length from each selected corner.  So if there're too many<br>
+ anchors on original path, this script can not round nicely.<br>
+<br>
+ ## Radius<br>
+ Actually, the specified "radius" is not for a radius of arcs which drawn.<br>
+ It is for the line length from each selected corner and is for the base<br>
+ to compute the length of handles.  The reason calling it "radius" is<br>
+ for compatibility with the "Round Corners" filter.<br>
+<br>
+<br>
+ This script does not round the corners which already rounded.<br>
+ (for example, select a circle and run this script does nothing)<br>
+<br>
+ ### notice<br>
+ In the rounding process, the script merges anchors which nearly<br>
+ overlapped (when the distance between anchors is less than 0.05 points).<br>
+<br>
+ This script does not work for some part of compound pathes.<br>
+ When this occurs, please select part of the compound path or release the compound path and<br>
+ select them, then run script again.<br>
+ I still have not figured out how to get properties from grouped pathes inside a compound path.
+</p>
+
+<hr>
+<h3><A name="sine">Sine Curve</A></h3>
+<p>
+<img src="img/aics_script_sine_curve.gif" width="396" height="156" alt="" border=1><br>
+draws (approximate) sine curve at bottom left of the artboard</p>
+
+<p>The values of the coordinates are based on <a href="http://www.tinaja.com/cubic01.asp">Don Lancaster's Guru's Lair Cubic Spline Library</a>.
+</p>
+
+<hr>
+<h3><A name="fromapoint">Tangents From A Point</A></h3>
+<p>
+<img src="img/aics_script_fromapoint.gif" width="420" height="278" alt="" border=1>
+<img src="img/aics_script_fromapoint_tangency.gif" width="343" height="244" alt="" border=1><br>
+ draws tangent lines from a selected anchor point to selected curved segments.<br>
+<br>
+ This script tries to find a path with only 1 anchor selected,<br>
+ from foreground to background. And specifies the selected point<br>
+ of the path as starting point of tangents.<br>
+ "the selected curved segments" means rest of the selected pathes.<br>
+<br>
+ You can use an isolated point as the starting point.<br>
+ In this case, starting isolated point is removed after drawing tangents.<br>
+<br>
+ Drawn tangents have handles at ends.<br>
+ So you can move the starting side of anchor point with keeping tangency.
+</p>
+
+<hr>
+<h3><A name="treelike">Tree-like</A></h3>
+<p>
+<img src="img/aics_script_tree_like.gif" width="348" height="184" alt="" border=1><br>
+draws a tree-like shape at the center of the artboard
+<br>
+ ### notice<br>
+ The trees are made with various width of lines.<br>
+ So please be careful about the setting of Scale Tool<br>
+ when you want to scale them.
+</p>
+<hr>
+<DIV align=center>
+<font color="#999999"><SMALL>(c)2005-2009, sh. All Rights Reserved.</SMALL></font></DIV>
+</blockquote>
+</BODY>
+</html>
