@@ -25,7 +25,7 @@
 var minDist = 0.05;
 
 // report how many anchors had been reduced for
-// this number of pathes in the selection. (counting from foreground)
+// this number of paths in the selection. (counting from foreground)
 var repo_max = 10;
 
 // ===================================
@@ -35,15 +35,15 @@ var result = {};
 result.before = 0;
 result.after  = 0;
 
-var pathes = [];
-getPathItemsInSelection(2, pathes);
+var paths = [];
+getPathItemsInSelection(2, paths);
 
-if(pathes.length > 0){
+if(paths.length > 0){
   var p, len;
   var msgs = [];
   
-  for(var j = pathes.length - 1; j >= 0; j--){
-    p = pathes[j].pathPoints;
+  for(var j = paths.length - 1; j >= 0; j--){
+    p = paths[j].pathPoints;
     
     readjustAnchors(p, minDist, result);
     
@@ -61,8 +61,8 @@ if(pathes.length > 0){
     }
   }
 
-  if(pathes.length > repo_max){
-    msgs.push( "\n(a log for first " + repo_max + " pathes)" );
+  if(paths.length > repo_max){
+    msgs.push( "\n(a log for first " + repo_max + " paths)" );
   }
   
   alert("# the number of anchors\n      before => after\n------------------------\n" + msgs.join(""));
@@ -109,38 +109,38 @@ function dist2(p1, p2) {
 // ------------------------------------------------
 // extract PathItems from the selection which length of PathPoints
 // is greater than "n"
-function getPathItemsInSelection(n, pathes){
+function getPathItemsInSelection(n, paths){
   if(documents.length < 1) return;
   
   var s = activeDocument.selection;
   
   if (!(s instanceof Array) || s.length < 1) return;
 
-  extractPathes(s, n, pathes);
+  extractPaths(s, n, paths);
 }
 
 // --------------------------------------
 // extract PathItems from "s" (Array of PageItems -- ex. selection),
-// and put them into an Array "pathes".  If "pp_length_limit" is specified,
+// and put them into an Array "paths".  If "pp_length_limit" is specified,
 // this function extracts PathItems which PathPoints length is greater
 // than this number.
-function extractPathes(s, pp_length_limit, pathes){
+function extractPaths(s, pp_length_limit, paths){
   for(var i = 0; i < s.length; i++){
     if(s[i].typename == "PathItem"){
       if(pp_length_limit
          && s[i].pathPoints.length <= pp_length_limit){
         continue;
       }
-      pathes.push(s[i]);
+      paths.push(s[i]);
       
     } else if(s[i].typename == "GroupItem"){
       // search for PathItems in GroupItem, recursively
-      extractPathes(s[i].pageItems, pp_length_limit, pathes);
+      extractPaths(s[i].pageItems, pp_length_limit, paths);
       
     } else if(s[i].typename == "CompoundPathItem"){
       // searches for pathitems in CompoundPathItem, recursively
       // ( ### Grouped PathItems in CompoundPathItem are ignored ### )
-      extractPathes(s[i].pathItems, pp_length_limit , pathes);
+      extractPaths(s[i].pathItems, pp_length_limit , paths);
     }
   }
 }

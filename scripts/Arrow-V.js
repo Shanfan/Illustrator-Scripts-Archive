@@ -1,12 +1,12 @@
 // Arrow
 
 // draws arrow for each selected end (anchor) of the
-// selected pathes.
+// selected paths.
 
 // The visible peaks of arrows exactly locate at each visible end
-// of the selected pathes.
+// of the selected paths.
 
-// The end of pathes are trimmed in order to avoid sticking out from the head of the arrow.
+// The end of paths are trimmed in order to avoid sticking out from the head of the arrow.
 
 // The path with projection end cap is modified to but end cap.
 
@@ -36,9 +36,9 @@ var hpi = mpi / 2;
 
 main();
 function main(){
-  var pathes = [];
-  getPathItemsInSelection(1, pathes);
-  if(pathes.length<1) return;
+  var paths = [];
+  getPathItemsInSelection(1, paths);
+  if(paths.length<1) return;
 
   arrow.width /= 2;
   arrow.angle = Math.atan2( arrow.width, arrow.length);
@@ -49,28 +49,28 @@ function main(){
   var this_size_has_handle;
   var show_projection_endcap_alert = false;
 
-  for(i = 0; i < pathes.length; i++){
-    if(!(pathes[i].stroked) || pathes[i].closed) continue;
+  for(i = 0; i < paths.length; i++){
+    if(!(paths[i].stroked) || paths[i].closed) continue;
 
-    if( pathes[i].strokeCap == StrokeCap.PROJECTINGENDCAP ){
-      pathes[i].strokeCap = StrokeCap.BUTTENDCAP;
+    if( paths[i].strokeCap == StrokeCap.PROJECTINGENDCAP ){
+      paths[i].strokeCap = StrokeCap.BUTTENDCAP;
       show_projection_endcap_alert = true;
     }
     
-    p = pathes[i].pathPoints;
+    p = paths[i].pathPoints;
     z = p.length - 1;
     
     // eachlen : define the head length of the arrow according to the stroke width
-    arrow.eachlen = (Math.max(pathes[i].strokeWidth, arrow.limit)) * arrow.length;
+    arrow.eachlen = (Math.max(paths[i].strokeWidth, arrow.limit)) * arrow.length;
     
     // offset : define the distance for moving anchor point in order to 
     //          the end of the path doesn't run off the head of the arrow
     if( arrow.fill ){
       arrow.offset = arrow.eachlen * 0.8;
-    } else if( pathes[i].strokeCap == StrokeCap.ROUNDENDCAP ){
+    } else if( paths[i].strokeCap == StrokeCap.ROUNDENDCAP ){
       arrow.offset = 0;
     } else {
-      arrow.offset = pathes[i].strokeWidth / (2 * Math.cos(hpi - arrow.angle));
+      arrow.offset = paths[i].strokeWidth / (2 * Math.cos(hpi - arrow.angle));
     }
 
     // beginning side
@@ -79,7 +79,7 @@ function main(){
       other_side_has_handle = arrNeq(q[2], q[3]);
       this_size_has_handle  = arrNeq(q[0], q[1]);
       
-      t = drawArrow(pathes[i], p[0], q, q[0], 1);
+      t = drawArrow(paths[i], p[0], q, q[0], 1);
       
       with(p[0]){  // define new location of anchor and handle
         if( other_side_has_handle || this_size_has_handle ){
@@ -99,7 +99,7 @@ function main(){
       other_side_has_handle = arrNeq(q[0], q[1]);
       this_size_has_handle  = arrNeq(q[2], q[3]);
       
-      t = drawArrow(pathes[i], p[z], q, q[3], -1);
+      t = drawArrow(paths[i], p[z], q, q[3], -1);
       
       with(p[z]){
         rightDirection = anchor;
@@ -116,7 +116,7 @@ function main(){
   redraw();
 
   if( show_projection_endcap_alert ){
-    alert("NOTICE: The pathes with PROJECTION end cap\n"
+    alert("NOTICE: The paths with PROJECTION end cap\n"
           + "  were modified to BUT end cap.\n"
           + "  Please undo if it's an unwanted result.");
   }
@@ -303,22 +303,22 @@ function isSelected(p){ // PathPoint
 // ------------------------------------------------
 // extract PathItems from the selection which length of PathPoints
 // is greater than "n"
-function getPathItemsInSelection(n, pathes){
+function getPathItemsInSelection(n, paths){
   if(documents.length < 1) return;
   
   var s = activeDocument.selection;
   
   if (!(s instanceof Array) || s.length < 1) return;
 
-  extractPathes(s, n, pathes);
+  extractPaths(s, n, paths);
 }
 
 // --------------------------------------
 // extract PathItems from "s" (Array of PageItems -- ex. selection),
-// and put them into an Array "pathes".  If "pp_length_limit" is specified,
+// and put them into an Array "paths".  If "pp_length_limit" is specified,
 // this function extracts PathItems which PathPoints length is greater
 // than this number.
-function extractPathes(s, pp_length_limit, pathes){
+function extractPaths(s, pp_length_limit, paths){
   for(var i = 0; i < s.length; i++){
     if(s[i].typename == "PathItem"
        && !s[i].guides && !s[i].clipping){
@@ -326,16 +326,16 @@ function extractPathes(s, pp_length_limit, pathes){
          && s[i].pathPoints.length <= pp_length_limit){
         continue;
       }
-      pathes.push(s[i]);
+      paths.push(s[i]);
       
     } else if(s[i].typename == "GroupItem"){
       // search for PathItems in GroupItem, recursively
-      extractPathes(s[i].pageItems, pp_length_limit, pathes);
+      extractPaths(s[i].pageItems, pp_length_limit, paths);
       
     } else if(s[i].typename == "CompoundPathItem"){
       // searches for pathitems in CompoundPathItem, recursively
       // ( ### Grouped PathItems in CompoundPathItem are ignored ### )
-      extractPathes(s[i].pathItems, pp_length_limit , pathes);
+      extractPaths(s[i].pathItems, pp_length_limit , paths);
     }
   }
 }

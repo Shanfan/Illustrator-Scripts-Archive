@@ -20,23 +20,23 @@ var ver10 = (version.indexOf('10') == 0);
 //main();
 // ------------------------------------------------
 function main(){
-  var pathes = [];
-  getPathItemsInSelection(1, pathes);
-  if(pathes.length < 1) return;
+  var paths = [];
+  getPathItemsInSelection(1, paths);
+  if(paths.length < 1) return;
   
-  activateEditableLayer(pathes[0]);
+  activateEditableLayer(paths[0]);
   
   var sw, scol;
   var i, j, k, p;
   var tgt = [];
   
-  for(i = 0; i < pathes.length; i++){
-    if(! sw && pathes[i].stroked){
-      sw   = pathes[i].strokeWidth;
-      scol = pathes[i].strokeColor;
+  for(i = 0; i < paths.length; i++){
+    if(! sw && paths[i].stroked){
+      sw   = paths[i].strokeWidth;
+      scol = paths[i].strokeColor;
     }
     
-    p = pathes[i].pathPoints;
+    p = paths[i].pathPoints;
 
     for(j = 0; j < p.length; j++){
       k = parseIdx(p, j + 1);
@@ -61,13 +61,13 @@ function main(){
     scol = col_Gray();
   }
 
-  var pathes2 = [];
+  var paths2 = [];
 
   if(tarr.length > 0){
     for(var i = 0; i < tarr.length; i++){
-      pathes2.push( drawLine(tarr[i][0], tarr[i][1], sw, scol) );
+      paths2.push( drawLine(tarr[i][0], tarr[i][1], sw, scol) );
     }
-    activeDocument.selection = pathes2;
+    activeDocument.selection = paths2;
     
   } else {
     alert("It seems that there's no common tangent.");
@@ -277,22 +277,22 @@ function parseIdx(p, n){ // PathPoints, number for index
 // ------------------------------------------------
 // extract PathItems from the selection which length of PathPoints
 // is greater than "n"
-function getPathItemsInSelection(n, pathes){
+function getPathItemsInSelection(n, paths){
   if(documents.length < 1) return;
   
   var s = activeDocument.selection;
   
   if (!(s instanceof Array) || s.length < 1) return;
 
-  extractPathes(s, n, pathes);
+  extractPaths(s, n, paths);
 }
 
 // --------------------------------------
 // extract PathItems from "s" (Array of PageItems -- ex. selection),
-// and put them into an Array "pathes".  If "pp_length_limit" is specified,
+// and put them into an Array "paths".  If "pp_length_limit" is specified,
 // this function extracts PathItems which PathPoints length is greater
 // than this number.
-function extractPathes(s, pp_length_limit, pathes){
+function extractPaths(s, pp_length_limit, paths){
   for(var i = 0; i < s.length; i++){
     if(s[i].typename == "PathItem"
        && !s[i].guides && !s[i].clipping){
@@ -300,16 +300,16 @@ function extractPathes(s, pp_length_limit, pathes){
          && s[i].pathPoints.length <= pp_length_limit){
         continue;
       }
-      pathes.push(s[i]);
+      paths.push(s[i]);
       
     } else if(s[i].typename == "GroupItem"){
       // search for PathItems in GroupItem, recursively
-      extractPathes(s[i].pageItems, pp_length_limit, pathes);
+      extractPaths(s[i].pageItems, pp_length_limit, paths);
       
     } else if(s[i].typename == "CompoundPathItem"){
       // searches for pathitems in CompoundPathItem, recursively
       // ( ### Grouped PathItems in CompoundPathItem are ignored ### )
-      extractPathes(s[i].pathItems, pp_length_limit , pathes);
+      extractPaths(s[i].pathItems, pp_length_limit , paths);
     }
   }
 }
@@ -321,8 +321,8 @@ function activateEditableLayer(pi){
 }
 
 
-// Bezier Class ================================
-function Bezier(pp, idx1, idx2){
+// Bezier ================================
+var Bezier = function(pp, idx1, idx2){
   this.p  = pp;
   this.p0 = pp[idx1];
   this.p1 = pp[idx2];
@@ -336,22 +336,19 @@ function Bezier(pp, idx1, idx2){
   
   this.x = defBezierCoefficients(this.q, 0);
   this.y = defBezierCoefficients(this.q, 1);
-  return this;
 }
-// --------------------------------------
-function Bezier_pnt(t){
-  return [ t * (t * (this.x[0] * t + this.x[1]) + this.x[2]) + this.x[3],
-           t * (t * (this.y[0] * t + this.y[1]) + this.y[2]) + this.y[3] ];
+Bezier.prototype = {
+  pnt : function(t){
+    return [ t * (t * (this.x[0] * t + this.x[1]) + this.x[2]) + this.x[3],
+             t * (t * (this.y[0] * t + this.y[1]) + this.y[2]) + this.y[3] ];
+  },
+  xyRot : function(){
+    for(var i = 0; i < 4; i++) this.q[i].reverse();
+    var tmp = this.y;
+    this.y = this.x;
+    this.x = tmp;
+  }
 }
-Bezier.prototype.pnt = Bezier_pnt;
-// ------------------------------------------------
-function Bezier_xyRot(){
-  for(var i = 0; i < 4; i++) this.q[i].reverse();
-  var tmp = this.y;
-  this.y = this.x;
-  this.x = tmp;
-}
-Bezier.prototype.xyRot = Bezier_xyRot;
 // ------------------------------------------------
 function bezierEq(q, t) {
   var u = 1-t;

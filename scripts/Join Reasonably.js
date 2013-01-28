@@ -1,6 +1,6 @@
 // Join Reasonably
 
-// joins the open pathes in the selection together with reasonable order
+// joins the open paths in the selection together with reasonable order
 
 
 // JavaScript Script for Adobe Illustrator CS3
@@ -37,7 +37,7 @@ main();
 function main(){
   var s = [];
   getPathItemsInSelection(1, s);
-  if(s.length < 2) return; // it needs at least 2 pathes
+  if(s.length < 2) return; // it needs at least 2 paths
 
   var i;
   for(i = 0; i < s.length; i++){
@@ -45,7 +45,7 @@ function main(){
   }
 
   var pi = s.shift(); // pick up the first path.
-                      // then, connect the rest of pathes to this.
+                      // then, connect the rest of paths to this.
                       // so, properties of the result path is same as this path.
   var p  = pi.pathPoints;
   var z = p.length - 1;
@@ -214,22 +214,22 @@ function getPnt(pnt, rad, dis){
 // ------------------------------------------------
 // extract PathItems from the selection which length of PathPoints
 // is greater than "n"
-function getPathItemsInSelection(n, pathes){
+function getPathItemsInSelection(n, paths){
   if(documents.length < 1) return;
   
   var s = activeDocument.selection;
   
   if (!(s instanceof Array) || s.length < 1) return;
 
-  extractPathes(s, n, pathes);
+  extractPaths(s, n, paths);
 }
 
 // --------------------------------------
 // extract PathItems from "s" (Array of PageItems -- ex. selection),
-// and put them into an Array "pathes".  If "pp_length_limit" is specified,
+// and put them into an Array "paths".  If "pp_length_limit" is specified,
 // this function extracts PathItems which PathPoints length is greater
 // than this number.
-function extractPathes(s, pp_length_limit, pathes){
+function extractPaths(s, pp_length_limit, paths){
   for(var i = 0; i < s.length; i++){
     if(s[i].typename == "PathItem"
        && !s[i].closed
@@ -238,16 +238,16 @@ function extractPathes(s, pp_length_limit, pathes){
          && s[i].pathPoints.length <= pp_length_limit){
         continue;
       }
-      pathes.push(s[i]);
+      paths.push(s[i]);
       
     } else if(s[i].typename == "GroupItem"){
       // search for PathItems in GroupItem, recursively
-      extractPathes(s[i].pageItems, pp_length_limit, pathes);
+      extractPaths(s[i].pageItems, pp_length_limit, paths);
       
     } else if(s[i].typename == "CompoundPathItem"){
       // searches for pathitems in CompoundPathItem, recursively
       // ( ### Grouped PathItems in CompoundPathItem are ignored ### )
-      extractPathes(s[i].pathItems, pp_length_limit , pathes);
+      extractPaths(s[i].pathItems, pp_length_limit , paths);
     }
   }
 }

@@ -28,28 +28,28 @@
 
 main();
 function main(){
-  var pathes = [];
-  getPathItemsInSelection(1, pathes);
-  if(pathes.length < 1) return;
+  var paths = [];
+  getPathItemsInSelection(1, paths);
+  if(paths.length < 1) return;
 
   var sd, dashLen, rest, incr, dashes_count;
   var strokeLen, prevLen;
   var j, p, k, m, n, q;
   var dup, dp, dsd, idx, gr;
 
-  for(var i = pathes.length - 1; i >= 0; i--){
+  for(var i = paths.length - 1; i >= 0; i--){
     prevLen = null;
-    sd = pathes[i].strokeDashes;
+    sd = paths[i].strokeDashes;
     if(sd.length < 1) continue;
 
     dashLen = 0;
     for(j in sd) dashLen += sd[j];
     if(dashLen == 0) continue;
 
-    p = pathes[i].pathPoints;
+    p = paths[i].pathPoints;
     if(p.length > 2){
-      gr = pathes[i].layer.groupItems.add();
-      gr.move(pathes[i], ElementPlacement.PLACEBEFORE);
+      gr = paths[i].layer.groupItems.add();
+      gr.move(paths[i], ElementPlacement.PLACEBEFORE);
     } else {
       gr = null;
     }
@@ -63,7 +63,7 @@ function main(){
       // duplicates a segment
       if(prevLen == null || Math.abs(strokeLen - prevLen) > 0.1){
         prevLen = strokeLen;
-        dup = pathes[i].duplicate();
+        dup = paths[i].duplicate();
         with(dup){
           closed = false;
           filled = false;
@@ -107,7 +107,7 @@ function main(){
           move(gr, ElementPlacement.PLACEBEFORE);
           idx = pathPoints.length - 1;
           // closes the path if the original is closed
-          if(pathes[i].closed && idx > 0){
+          if(paths[i].closed && idx > 0){
             pathPoints[0].leftDirection = pathPoints[idx].leftDirection;
             pathPoints[idx].remove();
             closed = true;
@@ -122,7 +122,7 @@ function main(){
     }
     
     // removes the original path
-    pathes[i].remove();
+    paths[i].remove();
   }
 }
 
@@ -179,22 +179,22 @@ function parseIdx(p, n){ // PathPoints, number for index
 // ------------------------------------------------
 // extract PathItems from the selection which length of PathPoints
 // is greater than "n"
-function getPathItemsInSelection(n, pathes){
+function getPathItemsInSelection(n, paths){
   if(documents.length < 1) return;
   
   var s = activeDocument.selection;
   
   if (!(s instanceof Array) || s.length < 1) return;
 
-  extractPathes(s, n, pathes);
+  extractPaths(s, n, paths);
 }
 
 // --------------------------------------
 // extract PathItems from "s" (Array of PageItems -- ex. selection),
-// and put them into an Array "pathes".  If "pp_length_limit" is specified,
+// and put them into an Array "paths".  If "pp_length_limit" is specified,
 // this function extracts PathItems which PathPoints length is greater
 // than this number.
-function extractPathes(s, pp_length_limit, pathes){
+function extractPaths(s, pp_length_limit, paths){
   for(var i = 0; i < s.length; i++){
     if(s[i].typename == "PathItem"
        && !s[i].guides && !s[i].clipping){
@@ -202,16 +202,16 @@ function extractPathes(s, pp_length_limit, pathes){
          && s[i].pathPoints.length <= pp_length_limit){
         continue;
       }
-      pathes.push(s[i]);
+      paths.push(s[i]);
       
     } else if(s[i].typename == "GroupItem"){
       // search for PathItems in GroupItem, recursively
-      extractPathes(s[i].pageItems, pp_length_limit, pathes);
+      extractPaths(s[i].pageItems, pp_length_limit, paths);
       
     } else if(s[i].typename == "CompoundPathItem"){
       // searches for pathitems in CompoundPathItem, recursively
       // ( ### Grouped PathItems in CompoundPathItem are ignored ### )
-      extractPathes(s[i].pathItems, pp_length_limit , pathes);
+      extractPaths(s[i].pathItems, pp_length_limit , paths);
     }
   }
 }

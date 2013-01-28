@@ -21,19 +21,19 @@ function main(){
   var s = activeDocument.selection;
   if(!(s instanceof Array) || s.length < 1) return;
 
-  var pathes = [];
-  extractPathes(s, 0, pathes);
+  var paths = [];
+  extractPaths(s, 0, paths);
 
   var p, j;
-  for(var i = pathes.length - 1; i >= 0; i--){
-    p = pathes[i].pathPoints;
+  for(var i = paths.length - 1; i >= 0; i--){
+    p = paths[i].pathPoints;
     for(j = p.length - 1; j >= 0; j--){
       if(isSelected(p[j])){
         if(p.length < 2) break;
         p[j].remove();
       }
     }
-    if(p.length < 2 && isSelected(p[0])) pathes[i].remove();
+    if(p.length < 2 && isSelected(p[0])) paths[i].remove();
   }
   redraw();
 }
@@ -44,19 +44,19 @@ function isSelected(p){ // PathPoint
 }
 
 // --------------------------------------
-function extractPathes(s, pp_length_limit, pathes){
+function extractPaths(s, pp_length_limit, paths){
   for(var i = 0; i < s.length; i++){
     if(s[i].typename == "PathItem"){
       
       if(pp_length_limit > 0
          && s[i].pathPoints.length <= pp_length_limit) continue;
-      pathes.push( s[i] );
+      paths.push( s[i] );
       
     } else if(s[i].typename == "GroupItem"){
-      extractPathes( s[i].pageItems, pp_length_limit, pathes);
+      extractPaths( s[i].pageItems, pp_length_limit, paths);
       
     } else if(s[i].typename == "CompoundPathItem"){
-      extractPathes( s[i].pathItems, pp_length_limit, pathes);
+      extractPaths( s[i].pathItems, pp_length_limit, paths);
     }
   }
 }

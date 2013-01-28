@@ -22,13 +22,13 @@ img{ margin-bottom: 1em; }
 <BODY bgcolor="#ffffff" link="#006699" alink="#ff9900" vlink="#660099" text="#333333">
 <blockquote>
 <br>
-<a href="http://park12.wakwak.com/~shp/">Home</a> (Japanese Page)
 <hr>
 <h2>JavaScript Scripts for Adobe Illustrator 10 - CS5</h2>
 <hr>
 <p>This archive includes following sample scripts (not well commented yet confused)<br>
 tested with Adobe Illustrator CS5, Windows XP SP3 (Japanese version).<br>
-Free to use and distribute.</p>
+Free to use and distribute.
+</p>
 <UL>
 	<LI><A href="#usage1"><b># General Note For Usage</b></A></LI>
 	<LI><A href="#dash_offset">Adjust Dashes (offset)</A></LI>
@@ -56,14 +56,20 @@ Free to use and distribute.</p>
 	<LI><A href="#treelike">Tree-like</A></LI>
 </UL>
 
-<p>The archive "<b>jsx_lf.zip</b>" includes the same scripts as "...js" but ".jsx" extension and unix newline (LF).
-Maybe suitable for Mac.<br>
+<p>The archive "<b>js_crlf.zip</b>" includes the same scripts as "...jsx" but ".js" extension and Windows newline (CRLF).<br>
+Maybe suitable for old CS on Windows.<br>
 <br>
 </p>
 
-<hr><p>Author : Hiroyuki Sato -
-<a href="mailto:pub.hiro.s@to.email.ne.jp">pub.hiro.s@to.email.ne.jp</a>
+<hr><p>Author : Hiroyuki Sato - pub.hiro.s@to.email.ne.jp
 </p>
+<ul><li><a href="https://github.com/shspage">Github/shspage</a> : Where new scripts are primarily uploaded.</li>
+<li><a href="http://shspage.blogspot.com/">s.h's page[en]</a> : A blog in English on Blogger.</li>
+<!-- li><a href="http://park12.wakwak.com/~shp/cgi-bin/wiki.cgi/view/Scriptographer_en">Scriptographer Scripts</a> : Scripts for a free scriptable plugin for Illustrator.</li -->
+<li><a href="http://d.hatena.ne.jp/shspage/">Hatena Diary : shspage</a> : Japanese blog.</li>
+<!-- li><a href="http://park12.wakwak.com/~shp/cgi-bin/wiki.cgi/view/JavaScript_scripts">Illustrator Scripts</a> ( Japanese Page : the same contents as this page ) </li -->
+<li>Follow me on twitter! / <a href="https://twitter.com/shspage/">shspage</a> (Japanese) / <a href="https://twitter.com/shspage_en/">shspage_en</a> (English)</li>
+</ul>
 
 <hr>
 <h3><A name="usage1"># General Note For Usage</A></h3>
@@ -84,10 +90,10 @@ In other words, selected parts means targets for Cut or Copy command.
 Regular (or Group) Select Tool selects whole of a path. - [<a href="img/aics_script_ways2select.gif" target="_blank">fig.</a>]<br>&nbsp;
 </p>
 <p><big><b>&bull; A Compound Path Issue</b></big><br>
-Some scripts don't work for some part of compound pathes.
+Some scripts don't work for some part of compound paths.
 When this occurs, please select part of the compound path or release the compound path and
 select them, then run script again.
-I still have not figured out how to get properties from grouped pathes inside a compound path.<br>&nbsp;
+I still have not figured out how to get properties from grouped paths inside a compound path.<br>&nbsp;
 </p>
 
 <hr>
@@ -112,8 +118,8 @@ total length of dashes and gaps
 <h3><A name="arc_correction">Arc Correction</A></h3>
 <p>
 <img src="img/aics_script_arc_correction.gif" width="580" height="130" alt="" border=1><br>
-corrects free-hand drawn arc-like pathes in the selection.
-To use, just select the pathes and run this script.<br>
+corrects free-hand drawn arc-like paths in the selection.
+To use, just select the paths and run this script.<br>
 For the (not need-to-know) detail of the method, please read the comments inside of the script with above figure.
 </p>
 
@@ -128,10 +134,10 @@ draws an (approximate) Archimedean spiral.
 <h3><A name="arrow">Arrow-A, Arrow-V</A></h3>
 <p>
 <img src="img/aics_script_arrow.gif" width="459" height="128" alt="" border=1><br>
-draws arrow for each selected end (anchor) of the selected pathes.</p>
+draws arrow for each selected end (anchor) of the selected paths.</p>
 <p>"A" and "V" mean the shape of the head of the arrow.</p>
-<p>The visible peaks of arrows exactly locate at each visible end of the selected pathes.</p>
-<p>The end of pathes are trimmed in order to avoid sticking out from the head of the arrow.</p>
+<p>The visible peaks of arrows exactly locate at each visible end of the selected paths.</p>
+<p>The end of paths are trimmed in order to avoid sticking out from the head of the arrow.</p>
 <p>The path with projection end cap is modified to but end cap.</p>
 
 <hr>
@@ -174,7 +180,7 @@ draws common tangents to the selected curved lines, if they are detected.<br>
 
 <hr>
 <h3><A name="cut_at">Cut At Selected Anchors</A></h3>
-<p>cuts selected pathes at each selected anchor</p>
+<p>cuts selected paths at each selected anchor</p>
 
 <hr>
 <h3><A name="dance">Dance</A></h3>
@@ -198,7 +204,7 @@ Length of each segment in each divided segments is equal.
 <hr>
 <h3><A name="dup_at">Dup At Selected Anchors</A></h3>
 <p><img src="img/aics_script_dup_at.gif" width="579" height="115" alt="" border=1><br>
-duplicates the foreground object in the selection
+duplicates the foreground object (path, group or other kind of object) in the selection<br>
 at the locations of the rest of each selected anchor points.
 </p>
 
@@ -216,7 +222,7 @@ extends all handles of selected anchor points with specified rate.<br>
 
 <hr>
 <h3><A name="join_reasonably">Join Reasonably</A></h3>
-<p>joins the open pathes in the selection together with reasonable order
+<p>joins the open paths in the selection together with reasonable order
 </p>
 
 <hr>
@@ -249,7 +255,7 @@ When a prompt appears, type in an optional value for the the connecting curves, 
 <h3><A name="path_length">Path Length</A></h3>
 <p>
 <img src="img/aics_script_length.gif" width="304" height="104" alt="" border=1><br>
-finds out length of the each selected path, and total length of the selected pathes.<br>
+finds out length of the each selected path, and total length of the selected paths.<br>
 Then write out them on the artboard as text object
 </p>
 <p>This script uses JavaScript's "length" property of PathItem.
@@ -257,7 +263,7 @@ if it is available (= CS3 or later).
  You can force calculate the length by "use_native_property"
 setting set to false. ( see inside the script )</p>
 <p>NOTE:<br>The return values of "PathItem.length" property and the function in this script
-are slightly different especially in complex pathes.
+are slightly different especially in complex paths.
 It seems that the difference is 0.05 millimeter at most.</p>
 
 <hr>
@@ -269,7 +275,7 @@ removes selected anchor points
 <hr>
 <h3><A name="reverse">Reverse</A></h3>
 <p>
-reverses the order of the anchor points of each selected pathes<br>
+reverses the order of the anchor points of each selected paths<br>
 </p>
 <p>2009-05-23: comment-out showing alert part</p>
 <hr>
@@ -321,10 +327,10 @@ reverses the order of the anchor points of each selected pathes<br>
  In the rounding process, the script merges anchors which nearly<br>
  overlapped (when the distance between anchors is less than 0.05 points).<br>
 <br>
- This script does not work for some part of compound pathes.<br>
+ This script does not work for some part of compound paths.<br>
  When this occurs, please select part of the compound path or release the compound path and<br>
  select them, then run script again.<br>
- I still have not figured out how to get properties from grouped pathes inside a compound path.
+ I still have not figured out how to get properties from grouped paths inside a compound path.
 </p>
 
 <hr>
@@ -346,7 +352,7 @@ draws (approximate) sine curve at bottom left of the artboard</p>
  This script tries to find a path with only 1 anchor selected,<br>
  from foreground to background. And specifies the selected point<br>
  of the path as starting point of tangents.<br>
- "the selected curved segments" means rest of the selected pathes.<br>
+ "the selected curved segments" means rest of the selected paths.<br>
 <br>
  You can use an isolated point as the starting point.<br>
  In this case, starting isolated point is removed after drawing tangents.<br>

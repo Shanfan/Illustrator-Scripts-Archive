@@ -25,11 +25,11 @@
 
 main();
 function main(){
-  var pathes = [];
-  getPathItemsInSelection(1, pathes);
-  if(pathes.length < 2) return;
+  var paths = [];
+  getPathItemsInSelection(1, paths);
+  if(paths.length < 2) return;
   
-  activateEditableLayer(pathes[0]);
+  activateEditableLayer(paths[0]);
 
   // Settings ===============================
 
@@ -45,16 +45,16 @@ function main(){
   if(v > 100) v = 100;
   v /= 100;
 
-  var pathes2 = pathes.slice(0);
+  var paths2 = paths.slice(0);
   var pi, i, j;
   
-  for(i = pathes.length - 1; i >= 1; i--){
+  for(i = paths.length - 1; i >= 1; i--){
     for(j = i - 1; j >= 0; j--){
-      pi = metaball(pathes[i], pathes[j], v, handle_len_rate);
-      if(pi != null) pathes2.push(pi);
+      pi = metaball(paths[i], paths[j], v, handle_len_rate);
+      if(pi != null) paths2.push(pi);
     }
   }
-  app.activeDocument.selection = pathes2;
+  app.activeDocument.selection = paths2;
 }
 
 // ---------------------------------------------
@@ -169,22 +169,22 @@ function activateEditableLayer(pi){
 // ------------------------------------------------
 // extract PathItems from the selection which length of PathPoints
 // is greater than "n"
-function getPathItemsInSelection(n, pathes){
+function getPathItemsInSelection(n, paths){
   if(documents.length < 1) return;
   
   var s = activeDocument.selection;
   
   if (!(s instanceof Array) || s.length < 1) return;
 
-  extractPathes(s, n, pathes);
+  extractPaths(s, n, paths);
 }
 
 // --------------------------------------
 // extract PathItems from "s" (Array of PageItems -- ex. selection),
-// and put them into an Array "pathes".  If "pp_length_limit" is specified,
+// and put them into an Array "paths".  If "pp_length_limit" is specified,
 // this function extracts PathItems which PathPoints length is greater
 // than this number.
-function extractPathes(s, pp_length_limit, pathes){
+function extractPaths(s, pp_length_limit, paths){
   for(var i = 0; i < s.length; i++){
     if(s[i].typename == "PathItem"
        && !s[i].guides && !s[i].clipping){
@@ -192,16 +192,16 @@ function extractPathes(s, pp_length_limit, pathes){
          && s[i].pathPoints.length <= pp_length_limit){
         continue;
       }
-      pathes.push(s[i]);
+      paths.push(s[i]);
       
     } else if(s[i].typename == "GroupItem"){
       // search for PathItems in GroupItem, recursively
-      extractPathes(s[i].pageItems, pp_length_limit, pathes);
+      extractPaths(s[i].pageItems, pp_length_limit, paths);
       
     } else if(s[i].typename == "CompoundPathItem"){
       // searches for pathitems in CompoundPathItem, recursively
       // ( ### Grouped PathItems in CompoundPathItem are ignored ### )
-      extractPathes(s[i].pathItems, pp_length_limit , pathes);
+      extractPaths(s[i].pathItems, pp_length_limit , paths);
     }
   }
 }

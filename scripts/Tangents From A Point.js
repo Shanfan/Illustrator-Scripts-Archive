@@ -5,7 +5,7 @@
 // This script tries to find a path with only 1 anchor selected,
 // from foreground to background. And specifies the selected point
 // of the path as starting point of tangents.
-// "the selected curved segments" means rest of the selected pathes.
+// "the selected curved segments" means rest of the selected paths.
 
 // You can use an isolated point as the starting point.
 // In this case, starting isolated point is removed after drawing tangents.
@@ -71,7 +71,7 @@ function main(){
     alert("Error: Fail to find a point to draw tangents from.\n"
           + "  ( This script searches a path which has only one\n"
           + "  selected anchor point, and tries to draw tangents\n"
-          + "  from this point to other selected pathes. )");
+          + "  from this point to other selected paths. )");
     return;
   }
   if(! sw){
@@ -326,22 +326,22 @@ function getIdx(pi, n){ // PathItem, number for index
 // ------------------------------------------------
 // extract PathItems from the selection which length of PathPoints
 // is greater than "n"
-function getPathItemsInSelection(n, pathes){
+function getPathItemsInSelection(n, paths){
   if(documents.length < 1) return;
   
   var s = activeDocument.selection;
   
   if (!(s instanceof Array) || s.length < 1) return;
 
-  extractPathes(s, n, pathes);
+  extractPaths(s, n, paths);
 }
 
 // --------------------------------------
 // extract PathItems from "s" (Array of PageItems -- ex. selection),
-// and put them into an Array "pathes".  If "pp_length_limit" is specified,
+// and put them into an Array "paths".  If "pp_length_limit" is specified,
 // this function extracts PathItems which PathPoints length is greater
 // than this number.
-function extractPathes(s, pp_length_limit, pathes){
+function extractPaths(s, pp_length_limit, paths){
   for(var i = 0; i < s.length; i++){
     if(s[i].typename == "PathItem"
        && !s[i].guides && !s[i].clipping){
@@ -349,16 +349,16 @@ function extractPathes(s, pp_length_limit, pathes){
          && s[i].pathPoints.length <= pp_length_limit){
         continue;
       }
-      pathes.push(s[i]);
+      paths.push(s[i]);
       
     } else if(s[i].typename == "GroupItem"){
       // search for PathItems in GroupItem, recursively
-      extractPathes(s[i].pageItems, pp_length_limit, pathes);
+      extractPaths(s[i].pageItems, pp_length_limit, paths);
       
     } else if(s[i].typename == "CompoundPathItem"){
       // searches for pathitems in CompoundPathItem, recursively
       // ( ### Grouped PathItems in CompoundPathItem are ignored ### )
-      extractPathes(s[i].pathItems, pp_length_limit , pathes);
+      extractPaths(s[i].pathItems, pp_length_limit , paths);
     }
   }
 }
@@ -429,8 +429,8 @@ function getPntSetsAngleOfTangent(p, idx1, dir){
   }
 }
 
-// Bezier Class ================================
-function Bezier(pp, idx1, idx2){
+// Bezier ================================
+var Bezier = function(pp, idx1, idx2){
   this.p  = pp;
   this.p0 = pp[idx1];
   this.p1 = pp[idx2];
@@ -444,39 +444,32 @@ function Bezier(pp, idx1, idx2){
   
   this.x = defBezierCoefficients(this.q, 0);
   this.y = defBezierCoefficients(this.q, 1);
-  return this;
 }
-// --------------------------------------
-function Bezier_pnt(t){
-  return [ t * (t * (this.x[0] * t + this.x[1]) + this.x[2]) + this.x[3],
-           t * (t * (this.y[0] * t + this.y[1]) + this.y[2]) + this.y[3] ];
-}
-Bezier.prototype.pnt = Bezier_pnt;
-// --------------------------------------
-function Bezier_dv(t){
-  return [ t * (3 * this.x[0] * t + 2 * this.x[1]) + this.x[2],
-           t * (3 * this.y[0] * t + 2 * this.y[1]) + this.y[2] ];
-}
-Bezier.prototype.dv = Bezier_dv;
-// ------------------------------------------------
-function Bezier_xyRot(){
-  for(var i = 0; i < 4; i++) this.q[i].reverse();
-  var tmp = this.y.slice(0);
-  this.y = this.x.slice(0);
-  this.x = tmp.slice(0);
-}
-Bezier.prototype.xyRot = Bezier_xyRot;
-// ------------------------------------------------
-function Bezier_mvDat(m,n){
-  if(m||n){
-    for(var i=0; i<4; i++){ this.q[i][0] += m; this.q[i][1] += n; }
+Bezier.prototype = {
+  pnt : function(t){
+    return [ t * (t * (this.x[0] * t + this.x[1]) + this.x[2]) + this.x[3],
+             t * (t * (this.y[0] * t + this.y[1]) + this.y[2]) + this.y[3] ];
+  },
+  dv : function(t){
+    return [ t * (3 * this.x[0] * t + 2 * this.x[1]) + this.x[2],
+             t * (3 * this.y[0] * t + 2 * this.y[1]) + this.y[2] ];
+  },
+  xyRot : function(){
+    for(var i = 0; i < 4; i++) this.q[i].reverse();
+    var tmp = this.y.slice(0);
+    this.y = this.x.slice(0);
+    this.x = tmp.slice(0);
+  },
+  mvDat : function(m, n){
+    if(m||n){
+      for(var i=0; i<4; i++){ this.q[i][0] += m; this.q[i][1] += n; }
+    }
+    this.a0 = this.q[0];  this.r = this.q[1];
+    this.l = this.q[2];   this.a1 = this.q[3];
+    this.x = defBezierCoefficients(this.q, 0);
+    this.y = defBezierCoefficients(this.q, 1);
   }
-  this.a0 = this.q[0];  this.r = this.q[1];
-  this.l = this.q[2];   this.a1 = this.q[3];
-  this.x = defBezierCoefficients(this.q, 0);
-  this.y = defBezierCoefficients(this.q, 1);
 }
-Bezier.prototype.mvDat = Bezier_mvDat;
 // ------------------------------------------------
 function bezierEq(q, t) {
   var u = 1 - t;

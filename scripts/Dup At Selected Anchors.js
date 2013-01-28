@@ -52,12 +52,12 @@ function main(){
     tgt_point = [(vb[0] + vb[2]) / 2, (vb[1] + vb[3]) / 2];
   }
   
-  var pathes = [];
-  extractPathes(s.slice(1), 0, pathes);
+  var paths = [];
+  extractPaths(s.slice(1), 0, paths);
   var j;
   
-  for(i = 0; i < pathes.length; i++){
-    p = pathes[i].pathPoints;
+  for(i = 0; i < paths.length; i++){
+    p = paths[i].pathPoints;
     
     for(var j=0; j < p.length; j++){
       if(isSelected(p[j])){
@@ -74,7 +74,7 @@ function isSelected(p){
 }
 
 // --------------------------------------
-function extractPathes(s, pp_length_limit, pathes){
+function extractPaths(s, pp_length_limit, paths){
   for(var i = 0; i < s.length; i++){
     if(s[i].typename == "PathItem"
        && ! s[i].guides
@@ -82,13 +82,13 @@ function extractPathes(s, pp_length_limit, pathes){
       
       if(pp_length_limit > 0
          && s[i].pathPoints.length <= pp_length_limit) continue;
-      pathes.push( s[i] );
+      paths.push( s[i] );
       
     } else if(s[i].typename == "GroupItem"){
-      extractPathes( s[i].pageItems, pp_length_limit, pathes);
+      extractPaths( s[i].pageItems, pp_length_limit, paths);
       
     } else if(s[i].typename == "CompoundPathItem"){
-      extractPathes( s[i].pathItems, pp_length_limit, pathes);
+      extractPaths( s[i].pathItems, pp_length_limit, paths);
     }
   }
 }

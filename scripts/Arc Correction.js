@@ -1,7 +1,7 @@
 // Arc Correction
 
-// corrects free-hand drawn arc-like pathes in the selection.
-// To use, select the pathes and run this script.
+// corrects free-hand drawn arc-like paths in the selection.
+// To use, select the paths and run this script.
 
 
 // JavaScript Script for Adobe Illustrator CS3
@@ -17,24 +17,24 @@
 
 // ----------------------------------------------
 function main(){
-  // targets are the open-pathes with 2 or more anchors
-  var pathes = [];
-  getPathItemsInSelection(1, pathes);
-  if(pathes.length < 1){
-    //alert("pathes.length < 1");
+  // targets are the open-paths with 2 or more anchors
+  var paths = [];
+  getPathItemsInSelection(1, paths);
+  if(paths.length < 1){
+    //alert("paths.length < 1");
     return;
   }
   
-  var pathes2 = [];
-  for(var i = 0; i < pathes.length; i++){
-    if(convertToArc(pathes[i])){
-      pathes2.push(pathes[i]);
+  var paths2 = [];
+  for(var i = 0; i < paths.length; i++){
+    if(convertToArc(paths[i])){
+      paths2.push(paths[i]);
     }
   }
   
-  // select converted pathes
-  if(pathes2.length > 0){
-    activeDocument.selection = pathes2;
+  // select converted paths
+  if(paths2.length > 0){
+    activeDocument.selection = paths2;
   }
 }
 
@@ -359,45 +359,45 @@ function equation2(a,b,c) {
 // ------------------------------------------------
 // extract PathItems from the selection which length of PathPoints
 // is greater than "n"
-function getPathItemsInSelection(n, pathes){
+function getPathItemsInSelection(n, paths){
   if(documents.length < 1) return;
   
   var s = activeDocument.selection;
   
   if (!(s instanceof Array) || s.length < 1) return;
 
-  extractPathes(s, n, pathes);
+  extractPaths(s, n, paths);
 }
 
 // --------------------------------------
 // extract PathItems from "s" (Array of PageItems -- ex. selection),
-// and put them into an Array "pathes".  If "pp_length_limit" is specified,
+// and put them into an Array "paths".  If "pp_length_limit" is specified,
 // this function extracts PathItems which PathPoints length is greater
 // than this number.
-function extractPathes(s, pp_length_limit, pathes){
+function extractPaths(s, pp_length_limit, paths){
   for(var i = 0; i < s.length; i++){
     if(s[i].typename == "PathItem"
-       && !s[i].closed){ // open pathes only
+       && !s[i].closed){ // open paths only
       if(pp_length_limit
          && s[i].pathPoints.length <= pp_length_limit){
         continue;
       }
-      pathes.push(s[i]);
+      paths.push(s[i]);
       
     } else if(s[i].typename == "GroupItem"){
       // search for PathItems in GroupItem, recursively
-      extractPathes(s[i].pageItems, pp_length_limit, pathes);
+      extractPaths(s[i].pageItems, pp_length_limit, paths);
       
     } else if(s[i].typename == "CompoundPathItem"){
       // searches for pathitems in CompoundPathItem, recursively
       // ( ### Grouped PathItems in CompoundPathItem are ignored ### )
-      extractPathes(s[i].pathItems, pp_length_limit , pathes);
+      extractPaths(s[i].pathItems, pp_length_limit , paths);
     }
   }
 }
 
-// Bezier Class ================================
-function Bezier(pp, idx1, idx2){
+// Bezier ================================
+var Bezier = function(pp, idx1, idx2){
   this.p  = pp;
   this.p0 = pp[idx1];
   this.p1 = pp[idx2];
@@ -411,39 +411,34 @@ function Bezier(pp, idx1, idx2){
   
   this.x = defBezierCoefficients(this.q, 0);
   this.y = defBezierCoefficients(this.q, 1);
-  return this;
 }
 // --------------------------------------
-function Bezier_pnt(t){
-  return [ t* (t* (this.x[0]*t + this.x[1]) + this.x[2]) + this.x[3],
-           t* (t* (this.y[0]*t + this.y[1]) + this.y[2]) + this.y[3] ];
-}
-Bezier.prototype.pnt = Bezier_pnt;
-// ----------------------------------------------
-function Bezier_getTangentV(){
-  var ar = []
-  var ts = [];
-  ts = ts.concat( equation2( 3*this.x[0], 2*this.x[1], this.x[2] ) );
-  for(var i=0; i<ts.length; i++){
-    if(ts[i]<=1 && ts[i]>=0) ar.push(ts[i]);
+Bezier.prototype = {
+  pnt : function(t){
+    return [ t* (t* (this.x[0]*t + this.x[1]) + this.x[2]) + this.x[3],
+             t* (t* (this.y[0]*t + this.y[1]) + this.y[2]) + this.y[3] ];
+  },
+  getTangentV : function(){
+    var ar = []
+      var ts = [];
+    ts = ts.concat( equation2( 3*this.x[0], 2*this.x[1], this.x[2] ) );
+    for(var i=0; i<ts.length; i++){
+      if(ts[i]<=1 && ts[i]>=0) ar.push(ts[i]);
+    }
+    if(ar.length>2) ar.sort();
+    return ar;
+  },
+  getTangentH : function(){
+    var ar = []
+      var ts = [];
+    ts = ts.concat( equation2( 3*this.y[0], 2*this.y[1], this.y[2] ) );
+    for(var i=0; i<ts.length; i++){
+      if(ts[i]<=1 && ts[i]>=0) ar.push(ts[i]);
+    }
+    if(ar.length>2) ar.sort();
+    return ar;
   }
-  if(ar.length>2) ar.sort();
-  return ar;
 }
-Bezier.prototype.getTangentV =Bezier_getTangentV;
-// ----------------------------------------------
-function Bezier_getTangentH(){
-  var ar = []
-  var ts = [];
-  ts = ts.concat( equation2( 3*this.y[0], 2*this.y[1], this.y[2] ) );
-  for(var i=0; i<ts.length; i++){
-    if(ts[i]<=1 && ts[i]>=0) ar.push(ts[i]);
-  }
-  if(ar.length>2) ar.sort();
-  return ar;
-}
-Bezier.prototype.getTangentH =Bezier_getTangentH;
-
 // ------------------------------------------------
 function defBezierCoefficients(q, n){
   return [-q[0][n] + 3 * (q[1][n] - q[2][n]) + q[3][n],
