@@ -43,46 +43,18 @@
 
 <p>This repository includes a "js" and a "jsx" folder. They are the same scripts but "js" folder includes ".js" extension and Windows newline (CRLF). Maybe suitable for old CS on Windows.  </p>
 
-<ul>
-<li><a href="###%20Adjust%20Dashes-offset">Adjust Dashes-offset</a></li>
-<li><a href="###%20Adjust%20Dashes">Adjust Dashes</a></li>
-<li><a href="###%20Arc%20Correction">Arc Correction</a></li>
-<li><a href="###%20Archimedean%20Spiral">Archimedean Spiral</a></li>
-<li><a href="###%20Arrow-A,%20Arrow-V">Arrow-A, Arrow-V</a></li>
-<li><a href="###%20Circle">Circle</a></li>
-<li><a href="###%20Circumcircle">Circumcircle</a></li>
-<li><a href="###%20Common%20Tangents">Common Tangents</a></li>
-<li><a href="###%20Cut%20At%20Selected%20Anchors">Cut At Selected Anchors</a></li>
-<li><a href="###%20Dance">Dance</a></li>
-<li><a href="###%20Divide%20Length">Divide Length</a></li>
-<li><a href="###%20Dup%20At%20Selected%20Anchors">Dup At Selected Anchors</a></li>
-<li><a href="###%20Extend%20Handles">Extend Handles</a></li>
-<li><a href="###%20Join%20Reasonably">Join Reasonably</a></li>
-<li><a href="###%20Merge%20Overlapped%20Anchors">Merge Overlapped Anchors</a></li>
-<li><a href="###%20Metaball-Arc,%20Metaball">Metaball-Arc, Metaball</a></li>
-<li><a href="###%20Path%20Length">Path Length</a></li>
-<li><a href="###%20Remove%20Anchors">Remove Anchors</a></li>
-<li><a href="###%20Reverse">Reverse</a></li>
-<li><a href="###%20Round%20Any%20Corner">Round Any Corner</a></li>
-<li><a href="###%20Sine%20Curve">Sine Curve</a></li>
-<li><a href="###%20Tangents%20From%20A%20Point">Tangents From A Point</a></li>
-<li><a href="###%20Tree-like">Tree-like</a></li>
-</ul><hr><h3>Adjust Dashes-offset</h3>
+<hr><h2>Adjust Dashes-offset</h2>
 
 <p><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_adjust_dashes_offset_en.gif" alt="fig1"><br><strong>fig.1</strong> : This script adjusts dashed lines in the selection in order to the center of the first dash comes at each anchor points.<br><em>For its purpose, when adjacent segments of an anchor of the target path have a difference in length, a rectangle like above, for example, this script splits the path at this anchor, applies a suitable dash setting for each splitted path, then put them into a group. This is a lockstep trick caused by an Illustrator path can have only one simple rule for dashes and gaps. This process also CLEARS FILL COLORS, if it needs, and if the pash has BUTT end cap, change it to PROJECTION end cap.</em></p>
 
 <p><strong>fig.2</strong> : The left figure is splitted with pathfinder ( outline ), in order to make anchors at all intersection points.</p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Adjust Dashes</h3>
+<h2>Adjust Dashes</h2>
 
 <p>adjusts the lengths of dashes and gaps of dashed lines in order to the length of the path is divisible by total length of dashes and gaps. 
 <img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_hasen_en.gif" alt="fig2"></p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Arc Correction</h3>
+<h2>Arc Correction</h2>
 
 <p>corrects free-hand drawn arc-like paths in the selection. To use, just select the paths and run this script.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_arc_correction.gif" alt="fig3"></p>
 
@@ -90,29 +62,21 @@
 <p>For the (not need-to-know) detail of the method, please read the comments inside of the script with above figure.   </p>
 </blockquote>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Archimedean Spiral</h3>
+<h2>Archimedean Spiral</h2>
 
 <p>draws an (approximated) Archimedean spiral.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_archimedes.gif" alt="fig4"></p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Arrow-A, Arrow-V</h3>
+<h2>Arrow-A, Arrow-V</h2>
 
 <p>draws an arrow for each selected end (anchor) of the selected paths.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_arrow.gif" alt="fig5"></p>
 
 <p>"A" and "V" mean the shape of the head of the arrow. The visible peaks of arrows exactly locate at each visible end of the selected paths. The end of paths are trimmed in order to avoid sticking out from the head of the arrow. The path with projection end cap is modified to but end cap.  </p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Circle</h3>
+<h2>Circle</h2>
 
 <p>draws a circle with specified number of anchor points.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_circle_en.gif" alt="fig6"></p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Circumcircle</h3>
+<h2>Circumcircle</h2>
 
 <p>draws circumcircles for each selcted path<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_circumcircle.gif" alt="fig7"></p>
 
@@ -133,21 +97,15 @@ So the method to find the center and the radius for the circumcircle is rather i
 <p>The rightmost one in the figure above is a case of failure.  </p>
 </blockquote>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Common Tangents</h3>
+<h2>Common Tangents</h2>
 
 <p>draws common tangents to the selected curved lines, if they are detected.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_kyotsu_en.gif" alt="fig8"></p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Cut At Selected Anchors</h3>
+<h2>Cut At Selected Anchors</h2>
 
 <p>cuts selected paths at each selected anchor.    </p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Dance</h3>
+<h2>Dance</h2>
 
 <p>adds a new layer and draws dancing people on it<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_dance_en.gif" alt="fig9"></p>
 
@@ -155,23 +113,17 @@ So the method to find the center and the radius for the circumcircle is rather i
 <p>The dancers are made with various width of lines. So please remember to adjust the setting of Scale Tool for scaling strokes.  </p>
 </blockquote>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Divide Length</h3>
+<h2>Divide Length</h2>
 
 <p>divides each selected segment into specified number based on the length.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_divide_length.gif" alt="fig10"></p>
 
 <p>The length of each segment is equally distributed.  </p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Dup At Selected Anchors</h3>
+<h2>Dup At Selected Anchors</h2>
 
 <p>duplicates the foreground object in the selection at the locations of the rest of each selected anchor points.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_dup_at.gif" alt="fig11"></p>
 
-<p><a>Back To Top</a>   </p>
-
-<h3>Extend Handles</h3>
+<h2>Extend Handles</h2>
 
 <p>extends all handles of selected anchor points with specified rate.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_nobasu.gif" alt="fig12"></p>
 
@@ -183,24 +135,18 @@ So the method to find the center and the radius for the circumcircle is rather i
 -100 : reverse handles  </p>
 </blockquote>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Join Reasonably</h3>
+<h2>Join Reasonably</h2>
 
 <p>joins the open paths in the selection together with reasonable order  </p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Merge Overlapped Anchors</h3>
+<h2>Merge Overlapped Anchors</h2>
 
 <p>merges nearly overlapped anchor points.<br>
 It also reports how many anchor points had been reduced.  </p>
 
 <p>To use, simply select the path(es) and run this script.  </p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Metaball-Arc, Metaball</h3>
+<h2>Metaball-Arc, Metaball</h2>
 
 <p>creates Metaball-like shapes<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_metaball.gif" alt="fig13"></p>
 
@@ -221,7 +167,7 @@ It also reports how many anchor points had been reduced.  </p>
 <p>Combining the shapes using Pathfinder may results several overlapping anchor points on the path. if it occurs, it may help to solve it to use my another script "Merge Overlapped Anchors.js". (See above)</p>
 </blockquote>
 
-<h3>Path Length</h3>
+<h2>Path Length</h2>
 
 <p>finds out length of the each selected path, and total length of the selected paths. Then write out them on the artboard as text object.  </p>
 
@@ -231,21 +177,15 @@ It also reports how many anchor points had been reduced.  </p>
 <p>The returned values of "PathItem.length" property and the function in this script are slightly different especially in complex paths. It seems that the difference is 0.05 millimeter at most.</p>
 </blockquote>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Remove Anchors</h3>
+<h2>Remove Anchors</h2>
 
 <p>removes selected anchor points<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_remove_anchors.gif" alt="fig14"></p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Reverse</h3>
+<h2>Reverse</h2>
 
 <p>reverses the order of the anchor points of each selected paths  </p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Round Any Corner</h3>
+<h2>Round Any Corner</h2>
 
 <p>rounds selected corners of PathItems.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_roundany.gif" alt="fig15"></p>
 
@@ -282,16 +222,12 @@ This script does not work for some part of compound paths. When this occurs, ple
 I still have not figured out how to get properties from grouped paths inside a compound path.  </p>
 </blockquote>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Sine Curve</h3>
+<h2>Sine Curve</h2>
 
 <p>draws (approximate) sine curve at the origin of the artboard<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_sine_curve.gif" alt="fig17"><br>
 The values of the coordinates are based on <a href="http://www.tinaja.com/cubic01.asp">Don Lancaster's Guru's Lair Cubic Spline Library</a>.  </p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Tangents From A Point</h3>
+<h2>Tangents From A Point</h2>
 
 <p>draws tangent lines from a selected anchor point to selected curved segments.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_fromapoint.gif" alt="fig18"><br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_fromapoint_tangency.gif" alt="fig19"></p>
 
@@ -302,9 +238,7 @@ The values of the coordinates are based on <a href="http://www.tinaja.com/cubic0
 
 <p>Drawn tangents have handles at ends. So you can move the starting side of anchor point with keeping tangency.  </p>
 
-<p><a>Back To Top</a>  </p>
-
-<h3>Tree-like</h3>
+<h2>Tree-like</h2>
 
 <p>draws a tree-like shape at the center of the artboard<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_tree_like.gif" alt="fig20"></p>
 
@@ -312,8 +246,6 @@ The values of the coordinates are based on <a href="http://www.tinaja.com/cubic0
 <p>The trees are made with various width of lines. So please be careful about the setting of Scale Tool
 when you want to scale them.  </p>
 </blockquote>
-
-<p><a>Back To Top</a>  </p>
 
 <hr><h1>General Notes For Usage</h1>
 
