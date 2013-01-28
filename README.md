@@ -1,8 +1,8 @@
-# JavaScript Scripts for Adobe Illustrator 10 - CS5
+# JavaScript Scripts for Adobe Illustrator
 
-As far as I tested, they work fine in CS6  
+As far as I tested, they work fine from 10 ~ CS6  
 
-The following scripts are created by Hiroyuki Sato （GitHub @hiroyuki-sato）
+The following scripts are created by Hiroyuki Sato （GitHub.com/shspage）He is awesome.
 
 As he indicated them as "Free to use and distribute", I thought it'd be great to open it up here. Although these were written a couple of years ago, I still found them very useful every now and then. Thank you Sato san.  
 
