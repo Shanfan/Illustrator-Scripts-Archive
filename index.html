@@ -42,8 +42,7 @@
 
 <h2>Adjust Dashes</h2>
 
-<p>adjusts the lengths of dashes and gaps of dashed lines in order to the length of the path is divisible by total length of dashes and gaps. 
-<img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_hasen_en.gif" alt="fig2"></p>
+<p>adjusts the lengths of dashes and gaps of dashed lines in order to the length of the path is divisible by total length of dashes and gaps.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_hasen_en.gif" alt="fig2"></p>
 
 <h2>Arc Correction</h2>
 
@@ -184,24 +183,28 @@ It also reports how many anchor points had been reduced.  </p>
 
 <p><strong>How To Use</strong></p>
 
-<p><em>Illustrator CS</em>
-1. Select the anchor(s) or whole path(es) to round.
+<p><em>Illustrator CS</em><br>
+1. Select the anchor(s) or whole path(es) to round.<br>
 2. Run this script. A prompt box appears to set the rounding radius.<br>
-3. Input the radius in point, then click OK.</p>
+3. Input the radius in point, then click OK.  </p>
 
 <blockquote>
-<p>You can choose a behavior like Illustrator10 by change the setting. See "setting" section inside the script.</p>
+<p>You can choose a behavior like Illustrator10 by change the setting. See "setting" section inside the script.  </p>
 </blockquote>
 
-<p><em>Illustrator 10</em>
-1. Select the anchor(s) or whole path(es) to round
-    &gt; A foreground path will be used to specify the rounding radius - Half width of foreground path is used for the radius, excluding stroke width. So a circle is the most suitable for intuitive understanding and ease of use. The script would ask you to choose if there's a difference greater than 1pt between width and height of foreground path.</p>
+<p><em>Illustrator 10</em><br>
+1. Select the anchor(s) or whole path(es) to round  </p>
+
+<blockquote>
+<p>A foreground path will be used to specify the rounding radius - Half width of foreground path is used for the radius, excluding stroke width. So a circle is the most suitable for intuitive understanding and ease of use. The script would ask you to choose if there's a difference greater than 1pt between width and height of foreground path.  </p>
+</blockquote>
 
 <ol>
-<li>Run this script. The foreground path is removed after rounding.
-&gt; When the number of selected path is 1, predefined radius is used for rounding. (See "setting" section inside the script)</li>
+<li>Run this script. The foreground path is removed after rounding.<br>
+&gt; When the number of selected path is 1, predefined radius is used for rounding. (See "setting" section inside the script)<br>
+</li>
 </ol><p><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/rac2.gif" alt="fig16"><br><strong>Rounding Method</strong><br>
-Basically, the rounding method is compatible with the "Round Corners" filter. It is to add two anchors instead of the original anchor, at the points of specified line length from each selected corner. So if there're too many anchors on original path, this script can not round nicely.</p>
+Basically, the rounding method is compatible with the "Round Corners" filter. It is to add two anchors instead of the original anchor, at the points of specified line length from each selected corner. So if there're too many anchors on original path, this script can not round nicely.  </p>
 
 <p><strong>Radius</strong><br>
 Actually, the specified "radius" is not for a radius of arcs which drawn. It is for the line length from each selected corner and is for the base to compute the length of handles. The reason calling it "radius" is for compatibility with the "Round Corners" filter.  </p>
