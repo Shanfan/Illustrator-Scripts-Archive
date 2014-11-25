@@ -30,23 +30,25 @@
 
       </header>
       <section>
+      <h1>Disclaimer</h1>
+      <p>Please note that this page is no longer actively maintained. Hiroyuki dedicated <a href="http://shspage.com" target="_blank">this website</a> to all the future updates.</p>
         <h1>The Scripts</h1>
 
 <p>This repository includes a "js" and a "jsx" folder. They are the same scripts but "js" folder includes ".js" extension and Windows newline (CRLF). Maybe suitable for old CS on Windows.  </p>
 
 <h2>Adjust Dashes-offset</h2>
 
-<p><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_adjust_dashes_offset_en.gif" alt="fig1"><br><strong>fig.1</strong> : This script adjusts dashed lines in the selection in order to the center of the first dash comes at each anchor points.<br><em>For its purpose, when adjacent segments of an anchor of the target path have a difference in length, a rectangle like above, for example, this script splits the path at this anchor, applies a suitable dash setting for each splitted path, then put them into a group. This is a lockstep trick caused by an Illustrator path can have only one simple rule for dashes and gaps. This process also CLEARS FILL COLORS, if it needs, and if the pash has BUTT end cap, change it to PROJECTION end cap.</em></p>
+<p><img src="images/aics_script_adjust_dashes_offset_en.gif" alt="fig1"><br><strong>fig.1</strong> : This script adjusts dashed lines in the selection in order to the center of the first dash comes at each anchor points.<br><em>For its purpose, when adjacent segments of an anchor of the target path have a difference in length, a rectangle like above, for example, this script splits the path at this anchor, applies a suitable dash setting for each splitted path, then put them into a group. This is a lockstep trick caused by an Illustrator path can have only one simple rule for dashes and gaps. This process also CLEARS FILL COLORS, if it needs, and if the pash has BUTT end cap, change it to PROJECTION end cap.</em></p>
 
 <p><strong>fig.2</strong> : The left figure is splitted with pathfinder ( outline ), in order to make anchors at all intersection points.</p>
 
 <h2>Adjust Dashes</h2>
 
-<p>adjusts the lengths of dashes and gaps of dashed lines in order to the length of the path is divisible by total length of dashes and gaps.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_hasen_en.gif" alt="fig2"></p>
+<p>adjusts the lengths of dashes and gaps of dashed lines in order to the length of the path is divisible by total length of dashes and gaps.<br><img src="images/aics_script_hasen_en.gif" alt="fig2"></p>
 
 <h2>Arc Correction</h2>
 
-<p>corrects free-hand drawn arc-like paths in the selection. To use, just select the paths and run this script.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_arc_correction.gif" alt="fig3"></p>
+<p>corrects free-hand drawn arc-like paths in the selection. To use, just select the paths and run this script.<br><img src="images/aics_script_arc_correction.gif" alt="fig3"></p>
 
 <blockquote>
 <p>For the (not need-to-know) detail of the method, please read the comments inside of the script with above figure.   </p>
@@ -54,21 +56,21 @@
 
 <h2>Archimedean Spiral</h2>
 
-<p>draws an (approximated) Archimedean spiral.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_archimedes.gif" alt="fig4"></p>
+<p>draws an (approximated) Archimedean spiral.<br><img src="images/aics_script_archimedes.gif" alt="fig4"></p>
 
 <h2>Arrow-A, Arrow-V</h2>
 
-<p>draws an arrow for each selected end (anchor) of the selected paths.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_arrow.gif" alt="fig5"></p>
+<p>draws an arrow for each selected end (anchor) of the selected paths.<br><img src="images/aics_script_arrow.gif" alt="fig5"></p>
 
 <p>"A" and "V" mean the shape of the head of the arrow. The visible peaks of arrows exactly locate at each visible end of the selected paths. The end of paths are trimmed in order to avoid sticking out from the head of the arrow. The path with projection end cap is modified to but end cap.  </p>
 
 <h2>Circle</h2>
 
-<p>draws a circle with specified number of anchor points.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_circle_en.gif" alt="fig6"></p>
+<p>draws a circle with specified number of anchor points.<br><img src="images/aics_script_circle_en.gif" alt="fig6"></p>
 
 <h2>Circumcircle</h2>
 
-<p>draws circumcircles for each selcted path<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_circumcircle.gif" alt="fig7"></p>
+<p>draws circumcircles for each selcted path<br><img src="images/aics_script_circumcircle.gif"></p>
 
 <p><strong>Method:</strong><br>
 The major reason why I wrote this script is to draw a "circumcircle" for a star.<br>
@@ -89,7 +91,7 @@ So the method to find the center and the radius for the circumcircle is rather i
 
 <h2>Common Tangents</h2>
 
-<p>draws common tangents to the selected curved lines, if they are detected.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_kyotsu_en.gif" alt="fig8"></p>
+<p>draws common tangents to the selected curved lines, if they are detected.<br><img src="images/aics_script_kyotsu_en.gif" alt="fig8"></p>
 
 <h2>Cut At Selected Anchors</h2>
 
@@ -97,7 +99,7 @@ So the method to find the center and the radius for the circumcircle is rather i
 
 <h2>Dance</h2>
 
-<p>adds a new layer and draws dancing people on it<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_dance_en.gif" alt="fig9"></p>
+<p>adds a new layer and draws dancing people on it<br><img src="images/aics_script_dance_en.gif" alt="fig9"></p>
 
 <blockquote>
 <p>The dancers are made with various width of lines. So please remember to adjust the setting of Scale Tool for scaling strokes.  </p>
@@ -105,17 +107,17 @@ So the method to find the center and the radius for the circumcircle is rather i
 
 <h2>Divide Length</h2>
 
-<p>divides each selected segment into specified number based on the length.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_divide_length.gif" alt="fig10"></p>
+<p>divides each selected segment into specified number based on the length.<br><img src="images/aics_script_divide_length.gif" alt="fig10"></p>
 
 <p>The length of each segment is equally distributed.  </p>
 
 <h2>Dup At Selected Anchors</h2>
 
-<p>duplicates the foreground object in the selection at the locations of the rest of each selected anchor points.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_dup_at.gif" alt="fig11"></p>
+<p>duplicates the foreground object in the selection at the locations of the rest of each selected anchor points.<br><img src="images/aics_script_dup_at.gif" alt="fig11"></p>
 
 <h2>Extend Handles</h2>
 
-<p>extends all handles of selected anchor points with specified rate.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_nobasu.gif" alt="fig12"></p>
+<p>extends all handles of selected anchor points with specified rate.<br><img src="images/aics_script_nobasu.gif" alt="fig12"></p>
 
 <blockquote>
 <p>100 : original size<br>
@@ -138,7 +140,7 @@ It also reports how many anchor points had been reduced.  </p>
 
 <h2>Metaball-Arc, Metaball</h2>
 
-<p>creates Metaball-like shapes<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_metaball.gif" alt="fig13"></p>
+<p>creates Metaball-like shapes<br><img src="images/aics_script_metaball.gif" alt="fig13"></p>
 
 <blockquote>
 <p><em>Metaball-Arc</em> uses arcs to connect. <em>Metaball</em> uses suitable bezier curves.  </p>
@@ -158,7 +160,7 @@ It also reports how many anchor points had been reduced.  </p>
 </blockquote>
 
 <h2>Path Length</h2>
-
+<img src="images/aics_script_length.gif"/>
 <p>finds out length of the each selected path, and total length of the selected paths. Then write out them on the artboard as text object.  </p>
 
 <blockquote>
@@ -169,7 +171,7 @@ It also reports how many anchor points had been reduced.  </p>
 
 <h2>Remove Anchors</h2>
 
-<p>removes selected anchor points<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_remove_anchors.gif" alt="fig14"></p>
+<p>removes selected anchor points<br><img src="images/aics_script_remove_anchors.gif" alt="fig14"></p>
 
 <h2>Reverse</h2>
 
@@ -177,7 +179,7 @@ It also reports how many anchor points had been reduced.  </p>
 
 <h2>Round Any Corner</h2>
 
-<p>rounds selected corners of PathItems.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_roundany.gif" alt="fig15"></p>
+<p>rounds selected corners of PathItems.<br><img src="images/aics_script_roundany.gif" alt="fig15"></p>
 
 <p>Especially for the corners at the intersection point of curves, this script may work better than "Round Corners" filter, but slower.</p>
 
@@ -203,7 +205,7 @@ It also reports how many anchor points had been reduced.  </p>
 <li>Run this script. The foreground path is removed after rounding.<br>
 &gt; When the number of selected path is 1, predefined radius is used for rounding. (See "setting" section inside the script)<br>
 </li>
-</ol><p><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/rac2.gif" alt="fig16"><br><strong>Rounding Method</strong><br>
+</ol><p><img src="images/rac2.gif" alt="fig16"><br><strong>Rounding Method</strong><br>
 Basically, the rounding method is compatible with the "Round Corners" filter. It is to add two anchors instead of the original anchor, at the points of specified line length from each selected corner. So if there're too many anchors on original path, this script can not round nicely.  </p>
 
 <p><strong>Radius</strong><br>
@@ -218,12 +220,12 @@ I still have not figured out how to get properties from grouped paths inside a c
 
 <h2>Sine Curve</h2>
 
-<p>draws (approximate) sine curve at the origin of the artboard<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_sine_curve.gif" alt="fig17"><br>
+<p>draws (approximate) sine curve at the origin of the artboard<br><img src="images/aics_script_sine_curve.gif" alt="fig17"><br>
 The values of the coordinates are based on <a href="http://www.tinaja.com/cubic01.asp">Don Lancaster's Guru's Lair Cubic Spline Library</a>.  </p>
 
 <h2>Tangents From A Point</h2>
 
-<p>draws tangent lines from a selected anchor point to selected curved segments.<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_fromapoint.gif" alt="fig18"><br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_fromapoint_tangency.gif" alt="fig19"></p>
+<p>draws tangent lines from a selected anchor point to selected curved segments.<br><img src="images/aics_script_fromapoint.gif" alt="fig18"><br><img src="images/aics_script_fromapoint_tangency.gif" alt="fig19"></p>
 
 <p>This script tries to find a path with only 1 anchor selected, from foreground to background. And specifies the selected point of the path as starting point of tangents.<br>
 "the selected curved segments" means the rest of the selected paths.  </p>
@@ -234,7 +236,7 @@ The values of the coordinates are based on <a href="http://www.tinaja.com/cubic0
 
 <h2>Tree-like</h2>
 
-<p>draws a tree-like shape at the center of the artboard<br><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_tree_like.gif" alt="fig20"></p>
+<p>draws a tree-like shape at the center of the artboard<br><img src="images/aics_script_tree_like.gif" alt="fig20"></p>
 
 <blockquote>
 <p>The trees are made with various width of lines. So please be careful about the setting of Scale Tool
@@ -255,7 +257,7 @@ Or place the script in the directory "Adobe Illustrator CS3\Presets\Scripts", th
 
 <p>Some scripts work only for selected anchor points or sides (= lines, bezier curve segments). A side (= a line, a bezier curve segment) means one of each line segment drawn to connect a couple of anchor points. In other words, selected parts means targets for Cut or Copy command. Regular (or Group) Select Tool selects whole of a path.</p>
 
-<p><img src="http://park12.wakwak.com/%7Eshp/lc/et/img/aics_script_ways2select.gif" alt="Select the path"></p>
+<p><img src="images/aics_script_ways2select.gif" alt="Select the path"></p>
 
 <h3>A Compound Path Issue</h3>
 
@@ -275,9 +277,6 @@ Copyright&copy;2013 Hiroyuki Sato<br>
 This script is distributed under the MIT License. See the LICENSE file on GitHub for details.<br>
 Free to use and distribute.</p>
 
-<h3>Contact</h3>
-
-<p>Fill out <a href="http://www.ne.jp/asahi/life/cycle/fd_en/fd.html">the contact form on Hiroyuki's website</a>.</p>
       </section>
       <footer>
         <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
